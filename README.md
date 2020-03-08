@@ -25,7 +25,7 @@ writing text directly to a Control's DrawingContext.
 `FramworkElemtens`, `Controls`, etc. and how to directly 
 draw to the screen can be easily combined. Left in the sample is a `TextBox` and right 
 is a code drawn ellipse with the same (!) size like the TextBox. A possible use case would
-be a graph together with legend. 
+be a graph together with a legend. 
 
 ![User has changed data, cannot close window](CustomControlSample.png)
 
@@ -42,13 +42,14 @@ functionality.
 
 ### CustomControlBaseLib
 The only library needed to be referenced from other code, providing:
-* `CustomControlBase`: Base class for custom controls with functionality added for Children, Drawing, 
+* `CustomControlBase`: Base class for custom controls with functionality added for `Children`, drawing, 
 `Border`, `Padding` and `Background`.
 * `GlyphDrawer`: Writes text to a `DrawingContext`. Can also be used to calculate the length of text.
-### CustomControlSample
-Shows how to use `CustomControlBase`
 ### CustomControlSampleLib
-Helper library for `CustomControlSample`
+`CustomControlSample.cs` shows how to use `CustomControlBase` with detailed instructions. Copy its code into your own custom 
+control when you start to write it.
+### CustomControlSample
+WPF Core application displaying `CustomControlSample`
 
 ## Project Status
 Completed and stable
