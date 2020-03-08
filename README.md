@@ -20,7 +20,7 @@ writing text directly to a Control's DrawingContext.
 
 ## Sample
 
-`CustomControlBase` can be used for any custom control. `CustomControlSample` in 
+`CustomControlBase` can be used for any custom control you write. `CustomControlSample` in 
 `CustomControlSampleLib` provides a detailed example how to add `Visuals`, 
 `FramworkElemtens`, `Controls`, etc. and how to directly 
 draw to the screen can be easily combined. Left in the sample is a `TextBox` and right 
