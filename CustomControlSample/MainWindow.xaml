@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CustomControlSample"
         xmlns:CustomControlSampleLib="clr-namespace:CustomControlSampleLib;assembly=CustomControlSampleLib"
         mc:Ignorable="d"
-        Title="MainWindow" Width="500" Height="400">
+        Title="MainWindow" Width="400" Height="300">
     <Grid>
     <Grid.RowDefinitions>
       <RowDefinition/>
@@ -16,7 +16,7 @@
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto"/>
-      <ColumnDefinition Width="200"/>
+      <ColumnDefinition Width="100"/>
       <ColumnDefinition Width="50"/>
       <ColumnDefinition/>
     </Grid.ColumnDefinitions>
