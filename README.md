@@ -50,6 +50,10 @@ The only library needed to be referenced from other code, providing:
 control when you start to write it.
 ### CustomControlSample
 WPF Core application displaying `CustomControlSample`
+### GlyphDrawer
+Writes text to a `DrawingContext`. Can also be used to calculate the length of text.
+### DependencyObjectExtensions
+Contains the helper methods `FindVisualChildren()` and `FindVisualChild()`
 
 ## Project Status
 Completed and stable
