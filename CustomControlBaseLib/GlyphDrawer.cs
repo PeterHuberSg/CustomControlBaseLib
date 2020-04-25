@@ -5,7 +5,7 @@ CustomControlBaseLib.GlyphDrawer
 
 Writes text to a DrawingContext. Can also be used to calculate the length of text.
 
-Written in 2020 by Jürgpeter Huber 
+Written 2014 - 2020 by Jürgpeter Huber by Jürgpeter Huber 
 Contact: PeterCode at Peterbox dot com
 
 To the extent possible under law, the author(s) have dedicated all copyright and 
