@@ -38,22 +38,22 @@ functionality.
 ## Build requirements
 .Net Core 3.1 or later
 
-## Structure CustomControlBaseLib Solution
+## Structure Solution CustomControlBaseLib
 
-### CustomControlBaseLib
-The only library needed to be referenced from other code, providing:
-* `CustomControlBase`: Base class for custom controls with functionality added for `Children`, drawing, 
-`Border`, `Padding` and `Background`.
-* `GlyphDrawer`: Writes text to a `DrawingContext`. Can also be used to calculate the length of text.
-### CustomControlSampleLib
-`CustomControlSample.cs` shows how to use `CustomControlBase` with detailed instructions. Copy its code into your own custom 
-control when you start to write it.
-### CustomControlSample
-WPF Core application displaying `CustomControlSample`
-### GlyphDrawer
+### Library CustomControlBaseLib
+The only library needed to be referenced from your own code, providing:
+#### Class CustomControlBase
+Base class for custom controls with functionality added for `Children`, drawing, `Border`, `Padding` 
+and `Background`.
+#### Helper Class GlyphDrawer
 Writes text to a `DrawingContext`. Can also be used to calculate the length of text.
-### DependencyObjectExtensions
-Contains the helper methods `FindVisualChildren()` and `FindVisualChild()`
+#### Helper Class DependencyObjectExtensions
+Contains the methods `FindVisualChildren()` and `FindVisualChild()`
+### Library CustomControlSampleLib
+The class `CustomControlSample.cs` shows how to use the class `CustomControlBase` with detailed 
+instructions. Copy `CustomControlSample` code into your own custom control when you start to write it.
+### Library CustomControlSample
+WPF Core application displaying `CustomControlSample`
 
 ## Project Status
 Completed and stable
