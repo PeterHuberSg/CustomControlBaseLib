@@ -36,7 +36,7 @@ control from `Control`, but they don't do anything out of the box. `CustomContro
 functionality.
 
 ## Build requirements
-.Net Core 3.1 or later
+net5.0-windows or later
 
 ## Structure Solution CustomControlBaseLib
 

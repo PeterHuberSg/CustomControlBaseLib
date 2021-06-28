@@ -1,7 +1,7 @@
 ﻿/**************************************************************************************
 
-CustomControlBaseLib.GlyphDrawer
-================================
+CustomControlBaseLib.DependencyObjectExtensions
+===============================================
 
 Contains the DependencyObject extensions FindVisualChild() and FindVisualChildren()
 
@@ -33,7 +33,7 @@ namespace CustomControlBaseLib {
     /// <summary>
     /// Returns the children of type TChild in visualTree of parent
     /// </summary>
-    public static IEnumerable<TChild> FindVisualChildren<TChild>(DependencyObject? parent) where TChild : DependencyObject {
+    public static IEnumerable<TChild> FindVisualChildren<TChild>(this DependencyObject? parent) where TChild : DependencyObject {
       if (parent!=null) {
         for (int i=0; i < VisualTreeHelper.GetChildrenCount(parent); i++) {
           DependencyObject child = VisualTreeHelper.GetChild(parent, i);
@@ -53,7 +53,7 @@ namespace CustomControlBaseLib {
     /// <summary>
     /// Returns the first child of type TChild in visualTree of parent
     /// </summary>
-    public static TChild? FindVisualChild<TChild>(DependencyObject parent) where TChild : DependencyObject {
+    public static TChild? FindVisualChild<TChild>(this DependencyObject parent) where TChild : DependencyObject {
       foreach (TChild child in FindVisualChildren<TChild>(parent)) {
         return child;
       }
