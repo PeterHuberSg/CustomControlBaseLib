@@ -54,7 +54,8 @@ namespace CustomControlBaseLib {
     /// Construct a GlyphTypeface with the specified font properties
     /// </summary>
     public GlyphDrawer(FontFamily fontFamily, FontStyle fontStyle, FontWeight fontWeight,
-      FontStretch fontStretch, double pixelsPerDip) {
+      FontStretch fontStretch, double pixelsPerDip) 
+    {
       typeface = new Typeface(fontFamily, fontStyle, fontWeight, fontStretch);
       if (!typeface.TryGetGlyphTypeface(out glyphTypeface))
         throw new InvalidOperationException("No GlyphTypeface found");
@@ -74,24 +75,82 @@ namespace CustomControlBaseLib {
     public void Write(DrawingContext drawingContext, Point origin, string text, double size, Brush brush) {
       if (string.IsNullOrEmpty(text)) return;
 
+      double totalWidth = 0;
       ushort[] glyphIndexes = new ushort[text.Length];
       double[] advanceWidths = new double[text.Length];
 
-      double totalWidth = 0;
-
+      var glyphIndexesIdex = 0;
       for (int charIndex = 0; charIndex<text.Length; charIndex++) {
-        ushort glyphIndex = glyphTypeface.CharacterToGlyphMap[text[charIndex]];
-        glyphIndexes[charIndex] = glyphIndex;
-
+        var codePoint = (int)text[charIndex];
+        //https://docs.microsoft.com/en-us/dotnet/standard/base-types/character-encoding-introduction#surrogate-pairs
+        if (codePoint<0xd800) {
+          // codePoint consists of only 1 integer, nothing to do
+        } else if (codePoint<0xdc00) {
+          //high surrogate code point
+          if (charIndex>=text.Length) {
+            //low surrogate code pointmissing
+            System.Diagnostics.Debugger.Break();
+            codePoint = (int)'?';
+          } else {
+            var lowCodPoint = (int)text[++charIndex];
+            if (lowCodPoint<0xdc00 || lowCodPoint>=0xe000) {
+              //illeagel second surrogate code point
+              System.Diagnostics.Debugger.Break();
+              codePoint = (int)'?';
+            } else {
+              codePoint = 0x10000 + ((codePoint - 0xD800) *0x0400) + (lowCodPoint - 0xDC00);
+            }
+          }
+        } else if (codePoint<0xe000) {
+          //illeagel low surrogate code point, high should come first
+          System.Diagnostics.Debugger.Break();
+          codePoint = (int)'?';
+        } else {
+          // codePoint consists of only 1 integer, nothing to do
+        }
+        //ushort glyphIndex = glyphTypeface.CharacterToGlyphMap[codePoint];
+        if (!glyphTypeface.CharacterToGlyphMap.TryGetValue(codePoint, out var glyphIndex)) {
+          glyphIndex = glyphTypeface.CharacterToGlyphMap[(int)'?'];
+        };
+        glyphIndexes[glyphIndexesIdex] = glyphIndex;
         double width = glyphTypeface.AdvanceWidths[glyphIndex] * size;
-        advanceWidths[charIndex] = width;
-
+        advanceWidths[glyphIndexesIdex++] = width;
         totalWidth += width;
       }
 
+      if (glyphIndexes.Length!=glyphIndexesIdex) {
+        glyphIndexes = glyphIndexes[0..glyphIndexes.Length];
+        advanceWidths = advanceWidths[0..glyphIndexes.Length];
+      }
       GlyphRun glyphRun = new GlyphRun(glyphTypeface, 0, false, size, PixelsPerDip, glyphIndexes, origin, advanceWidths, null, null, null, null, null, null);
 
       drawingContext.DrawGlyphRun(brush, glyphRun);
+      /*
+                                  dxUnderline,
+                                  penThickness
+                              );
+
+                          // Apply the pair of guidelines: one for baseline and another
+                          // for top edge of undelining line. Both will be snapped to pixel grid.
+                          // Guideline pairing algorithm detects the case when these two
+                          // guidelines happen to be close to one another and provides
+                          // synchronous snapping, so that the gap between baseline and
+                          // undelining line does not depend on the position of text line.
+                          drawingContext.PushGuidelineY2(y, lineOrigin.Y - penThickness * 0.5 - y);
+
+                          try
+                          {
+                              drawingContext.DrawRectangle(
+                                  foregroundBrush,
+                                  null,               // pen
+                                  underlineRect
+                                  );
+                          }
+                          finally
+                          {
+                              drawingContext.Pop();
+                          }
+       */
     }
 
 

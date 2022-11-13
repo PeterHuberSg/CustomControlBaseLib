@@ -442,7 +442,7 @@ namespace CustomControlBaseLib {
 
 
     /// <summary>
-    /// Can be used to trace the sealed MeasureOverride
+    /// Can be used to trace the sealed OnRender
     /// </summary>
     protected virtual void OnRenderTraced(DrawingContext drawingContext) {
       doOnRender(drawingContext);

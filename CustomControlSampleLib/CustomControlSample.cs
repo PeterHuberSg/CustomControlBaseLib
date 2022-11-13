@@ -100,8 +100,8 @@ namespace CustomControlSampleLib {
     //      -----------------------------------------------------------------
 
     protected override Size MeasureContentOverride(Size constraint) {
+      System.Diagnostics.Debug.WriteLine($"{DateTime.Now:mm:ss:fff} MeasureContentOverride: {constraint}");
       //constraint is already reduced by Border and Padding.
-
       ChildTextBox.HorizontalAlignment = HorizontalContentAlignment;
       ChildTextBox.VerticalAlignment = VerticalContentAlignment;
 
@@ -139,6 +139,7 @@ namespace CustomControlSampleLib {
 
 
     protected override Size ArrangeContentOverride(Rect arrangeRect) {
+      System.Diagnostics.Debug.WriteLine($"{DateTime.Now:mm:ss:fff} ArrangeContentOverride: {arrangeRect}");
       if (ChildTextBox.HorizontalAlignment!=HorizontalContentAlignment || ChildTextBox.VerticalAlignment!=VerticalContentAlignment) {
         //ensure that arrange and measure use the same ContentAlignment, i.e. that it has not changed between the 2 calls
         throw new Exception("ContentAlignment has changed between Measure() and Arrange().");
@@ -194,6 +195,9 @@ namespace CustomControlSampleLib {
     // is exactly the same as what ArrangeContentOverride() returned. RenderSize would be used for children FrameworkElements.
 
     protected override void OnRenderContent(System.Windows.Media.DrawingContext drawingContext, Size renderContentSize) {
+      var r = System.Windows.Documents.TextElement.FontSizeProperty.GetMetadata(this);
+      var r1 = Control.FontSizeProperty.GetMetadata(this);
+      System.Diagnostics.Debug.WriteLine($"{DateTime.Now:mm:ss:fff} OnRenderContent: {RenderSize}");
       //draws an ellipse next to the ChildTextBox using the same size
       double radiusX = ChildTextBox.RenderSize.Width/2;
       double radiusY = ChildTextBox.RenderSize.Height/2;
