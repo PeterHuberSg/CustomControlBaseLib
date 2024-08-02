@@ -1,0 +1,85 @@
+﻿<Window x:Class="GlyphDrawerTestApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlyphDrawerTestApp"
+        mc:Ignorable="d"
+        Title="Glyph Drawer Test App" Height="450" Width="800">
+  <Grid x:Name="MainGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="5"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="auto"/>
+      <ColumnDefinition Width="100"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.Resources>
+      <Style TargetType="Label">
+        <Setter Property="FontWeight" Value="Bold"/>
+      </Style>
+      <Style TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0, 0, 4, 0"/>
+      </Style>
+    </Grid.Resources>
+
+    <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="7" Grid.ColumnSpan="2" Fill="Gainsboro"/>
+
+    <Label Grid.Row="0" Content="_Text 1"/>
+    <TextBox Grid.Row="0" Grid.Column="1" x:Name="TextTextBox1"/>
+
+    <Label Grid.Row="1" Content="FontSize 1"/>
+    <TextBox Grid.Row="1" Grid.Column="1" x:Name="FontSizeTextBox1"/>
+
+    <Label Grid.Row="2" Content="IsRightAligned 1"/>
+    <CheckBox Grid.Row="2" Grid.Column="1" x:Name="IsRightAlignedCheckBox1" VerticalAlignment="Center"/>
+
+    <Label Grid.Row="3" Content="IsSideways 1"/>
+    <CheckBox Grid.Row="3" Grid.Column="1" x:Name="IsSidewaysCheckBox1" VerticalAlignment="Center"/>
+
+    <Label Grid.Row="4" Content="Angle 1"/>
+    <TextBox Grid.Row="4" Grid.Column="1" x:Name="AngleTextBox1"/>
+
+    <Label Grid.Row="5" Content="Next Point 1"/>
+    <TextBox Grid.Row="5" Grid.Column="1" x:Name="NextPointTextBox1" IsReadOnly="True" Foreground="DarkBlue"/>
+
+    <Rectangle Grid.Row="7" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="2" Fill="DarkGray"/>
+
+    <Label Grid.Row="7" Content="Show second string"/>
+    <CheckBox Grid.Row="7" Grid.Column="1" x:Name="IsShowsecondStringCheckBox" VerticalAlignment="Center"/>
+
+    <Label Grid.Row="8" Content="_Text 2"/>
+    <TextBox Grid.Row="8" Grid.Column="1" x:Name="TextTextBox2"/>
+
+    <Label Grid.Row="9" Content="FontSize 2"/>
+    <TextBox Grid.Row="9" Grid.Column="1" x:Name="FontSizeTextBox2"/>
+
+    <Label Grid.Row="10" Content="IsRightAligned 2"/>
+    <CheckBox Grid.Row="10" Grid.Column="1" x:Name="IsRightAlignedCheckBox2" VerticalAlignment="Center"/>
+
+    <Label Grid.Row="11" Content="IsSideways 2"/>
+    <CheckBox Grid.Row="11" Grid.Column="1" x:Name="IsSidewaysCheckBox2" VerticalAlignment="Center"/>
+
+    <Label Grid.Row="12" Content="Angle 2"/>
+    <TextBox Grid.Row="12" Grid.Column="1" x:Name="AngleTextBox2"/>
+
+    <Label Grid.Row="13" Content="Next Point 2"/>
+    <TextBox Grid.Row="13" Grid.Column="1" x:Name="NextPointTextBox2" IsReadOnly="True" Foreground="DarkGreen"/>
+  </Grid>
+</Window>

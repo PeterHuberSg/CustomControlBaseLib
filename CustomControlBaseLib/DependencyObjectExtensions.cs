@@ -5,7 +5,7 @@ CustomControlBaseLib.DependencyObjectExtensions
 
 Contains the DependencyObject extensions FindVisualChild() and FindVisualChildren()
 
-Written 2014 - 2020 by Jürgpeter Huber by Jürgpeter Huber 
+Written 2014 - 2024 by Jürgpeter Huber by Jürgpeter Huber 
 Contact: PeterCode at Peterbox dot com
 
 To the extent possible under law, the author(s) have dedicated all copyright and 

@@ -5,7 +5,7 @@ CustomControlBaseLib.CustomControlBase
 
 Base class for custom controls with functionality added for Children, Drawing, Border, Padding and Background.
 
-Written 2014 - 2020 by Jürgpeter Huber 
+Written 2014 - 2024 by Jürgpeter Huber 
 Contact: PeterCode at Peterbox dot com
 
 To the extent possible under law, the author(s) have dedicated all copyright and 

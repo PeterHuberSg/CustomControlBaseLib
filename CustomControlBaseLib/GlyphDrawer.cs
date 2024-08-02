@@ -5,7 +5,7 @@ CustomControlBaseLib.GlyphDrawer
 
 Writes text to a DrawingContext. Can also be used to calculate the length of text.
 
-Written 2014 - 2020 by Jürgpeter Huber by Jürgpeter Huber 
+Written 2014 - 2024 by Jürgpeter Huber by Jürgpeter Huber 
 Contact: PeterCode at Peterbox dot com
 
 To the extent possible under law, the author(s) have dedicated all copyright and 
@@ -18,12 +18,12 @@ This software is distributed without any warranty.
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
 
 namespace CustomControlBaseLib {
+
 
   /// <summary>
   /// Draws glyphs to a DrawingContext. From the font information in the constructor, GlyphDrawer creates and stores 
@@ -59,27 +59,34 @@ namespace CustomControlBaseLib {
       typeface = new Typeface(fontFamily, fontStyle, fontWeight, fontStretch);
       if (!typeface.TryGetGlyphTypeface(out glyphTypeface))
         throw new InvalidOperationException("No GlyphTypeface found");
-
       PixelsPerDip = (float)pixelsPerDip;
     }
 
 
     /// <summary>
-    /// Writes a string to a DrawingContext, using the GlyphTypeface stored in the GlyphDrawer.
+    /// Writes a string to a DrawingContext, using the GlyphTypeface stored in the GlyphDrawer. Returns the coordinate 
+    /// where next character should be placed.
     /// </summary>
     /// <param name="drawingContext"></param>
-    /// <param name="origin"></param>
+    /// <param name="origin">if isRightAligned then left bottom pixel else right bottom pixel</param>
     /// <param name="text"></param>
     /// <param name="size">same unit like FontSize: (em)</param>
     /// <param name="brush"></param>
-    public void Write(DrawingContext drawingContext, Point origin, string text, double size, Brush brush) {
-      if (string.IsNullOrEmpty(text)) return;
+    /// <param name="isRightAligned"></param>
+    /// <param name="isSideways">Turns each character by 90 degrees</param>
+    /// <param name="angle">Rotates clockwise in degrees</param>
+    /// <returns>position of top left pixel immediately after last character drawn</returns>
+    public Point Write(DrawingContext drawingContext, Point origin, string text, double size, Brush brush, 
+      bool isRightAligned = false, bool isSideways = false, double angle = 0) 
+    {
+      if (string.IsNullOrEmpty(text)) return origin;
 
+      //translate string to glyphs
       double totalWidth = 0;
       ushort[] glyphIndexes = new ushort[text.Length];
       double[] advanceWidths = new double[text.Length];
 
-      var glyphIndexesIdex = 0;
+      var glyphIndexesIndex = 0;
       for (int charIndex = 0; charIndex<text.Length; charIndex++) {
         var codePoint = (int)text[charIndex];
         //https://docs.microsoft.com/en-us/dotnet/standard/base-types/character-encoding-introduction#surrogate-pairs
@@ -88,13 +95,13 @@ namespace CustomControlBaseLib {
         } else if (codePoint<0xdc00) {
           //high surrogate code point
           if (charIndex>=text.Length) {
-            //low surrogate code pointmissing
+            //low surrogate code point missing
             System.Diagnostics.Debugger.Break();
             codePoint = (int)'?';
           } else {
             var lowCodPoint = (int)text[++charIndex];
             if (lowCodPoint<0xdc00 || lowCodPoint>=0xe000) {
-              //illeagel second surrogate code point
+              //illegal second surrogate code point
               System.Diagnostics.Debugger.Break();
               codePoint = (int)'?';
             } else {
@@ -102,89 +109,57 @@ namespace CustomControlBaseLib {
             }
           }
         } else if (codePoint<0xe000) {
-          //illeagel low surrogate code point, high should come first
+          //illegal low surrogate code point, high should come first
           System.Diagnostics.Debugger.Break();
           codePoint = (int)'?';
         } else {
           // codePoint consists of only 1 integer, nothing to do
         }
-        //ushort glyphIndex = glyphTypeface.CharacterToGlyphMap[codePoint];
+
         if (!glyphTypeface.CharacterToGlyphMap.TryGetValue(codePoint, out var glyphIndex)) {
           glyphIndex = glyphTypeface.CharacterToGlyphMap[(int)'?'];
         };
-        glyphIndexes[glyphIndexesIdex] = glyphIndex;
-        double width = glyphTypeface.AdvanceWidths[glyphIndex] * size;
-        advanceWidths[glyphIndexesIdex++] = width;
+        glyphIndexes[glyphIndexesIndex] = glyphIndex;
+        double width;
+        if (isSideways) {
+          width = glyphTypeface.AdvanceHeights[glyphIndex] * size;
+        } else {
+          width = glyphTypeface.AdvanceWidths[glyphIndex] * size;
+        }
+        advanceWidths[glyphIndexesIndex++] = width;
         totalWidth += width;
       }
 
-      if (glyphIndexes.Length!=glyphIndexesIdex) {
-        glyphIndexes = glyphIndexes[0..glyphIndexes.Length];
-        advanceWidths = advanceWidths[0..glyphIndexes.Length];
-      }
-      GlyphRun glyphRun = new GlyphRun(glyphTypeface, 0, false, size, PixelsPerDip, glyphIndexes, origin, advanceWidths, null, null, null, null, null, null);
-
-      drawingContext.DrawGlyphRun(brush, glyphRun);
-      /*
-                                  dxUnderline,
-                                  penThickness
-                              );
-
-                          // Apply the pair of guidelines: one for baseline and another
-                          // for top edge of undelining line. Both will be snapped to pixel grid.
-                          // Guideline pairing algorithm detects the case when these two
-                          // guidelines happen to be close to one another and provides
-                          // synchronous snapping, so that the gap between baseline and
-                          // undelining line does not depend on the position of text line.
-                          drawingContext.PushGuidelineY2(y, lineOrigin.Y - penThickness * 0.5 - y);
-
-                          try
-                          {
-                              drawingContext.DrawRectangle(
-                                  foregroundBrush,
-                                  null,               // pen
-                                  underlineRect
-                                  );
-                          }
-                          finally
-                          {
-                              drawingContext.Pop();
-                          }
-       */
-    }
-
-
-    /// <summary>
-    /// Writes a string to a DrawingContext, using the GlyphTypeface stored in the GlyphDrawer. The text will be right aligned. The
-    /// last character will be at Origin, all other characters in front.
-    /// </summary>
-    /// <param name="drawingContext"></param>
-    /// <param name="origin"></param>
-    /// <param name="text"></param>
-    /// <param name="size">same unit like FontSize: (em)</param>
-    /// <param name="brush"></param>
-    public void WriteRightAligned(DrawingContext drawingContext, Point origin, string text, double size, Brush brush) {
-      if (string.IsNullOrEmpty(text)) return;
-
-      ushort[] glyphIndexes = new ushort[text.Length];
-      double[] advanceWidths = new double[text.Length];
-
-      double totalWidth = 0;
-
-      for (int charIndex = 0; charIndex<text.Length; charIndex++) {
-        ushort glyphIndex = glyphTypeface.CharacterToGlyphMap[text[charIndex]];
-        glyphIndexes[charIndex] = glyphIndex;
-
-        double width = glyphTypeface.AdvanceWidths[glyphIndex] * size;
-        advanceWidths[charIndex] = width;
-
-        totalWidth += width;
+      //shorten glyphIndexes if there were 2 characters resulting in just 1 glyph
+      if (glyphIndexes.Length!=glyphIndexesIndex) {
+        glyphIndexes = glyphIndexes[0..glyphIndexesIndex];
+        advanceWidths = advanceWidths[0..glyphIndexesIndex];
       }
 
-      Point newOrigin = new Point(origin.X - totalWidth, origin.Y);
-      GlyphRun glyphRun = new GlyphRun(glyphTypeface, 0, false, size, PixelsPerDip, glyphIndexes, newOrigin, advanceWidths, null, null, null, null, null, null);
+      //paint glyphs
+      var originAligned = isRightAligned ? new Point(origin.X - totalWidth, origin.Y) : origin;
+      var glyphRun = new GlyphRun(glyphTypeface, 0, isSideways: isSideways, size, PixelsPerDip, glyphIndexes, 
+        originAligned, advanceWidths, null, null, null, null, null, null);
 
-      drawingContext.DrawGlyphRun(brush, glyphRun);
+      if (angle==0) {
+        drawingContext.DrawGlyphRun(brush, glyphRun);
+      } else {
+        //rotation needed around origin, regardless of alignment
+        drawingContext.PushTransform(new RotateTransform(angle, origin.X, origin.Y));
+        drawingContext.DrawGlyphRun(brush, glyphRun);
+        drawingContext.Pop();
+      }
+      
+      //calculate where the next glyph should be painted after this string
+      if (isRightAligned) {
+        totalWidth = -totalWidth;
+      }
+      if (angle==0) {
+        return new Point(origin.X + totalWidth, origin.Y);
+      } else {
+        var angleRad = angle * Math.PI / 180;
+        return new Point(origin.X + totalWidth * Math.Cos(angleRad), origin.Y  + totalWidth * Math.Sin(angleRad));
+      }
     }
 
 
@@ -193,7 +168,6 @@ namespace CustomControlBaseLib {
     /// </summary>
     /// <param name="text"></param>
     /// <param name="size">same unit like FontSize: (em)</param>
-    /// <returns></returns>
     public double GetLength(string text, double size) {
       double length = 0;
 
