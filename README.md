@@ -214,17 +214,26 @@ and `Background`.
 Writes text to a `DrawingContext`. Can also be used to calculate the length of text.
 #### Helper Class DependencyObjectExtensions
 Contains the methods `FindVisualChildren()` and `FindVisualChild()`
+
 ### Library CustomControlSampleLib
 The class `CustomControlSample.cs` shows how to use the class `CustomControlBase` with detailed 
 instructions. Copy `CustomControlSample` code into your own custom control when you start to write it.
+
 ### Library CustomControlSample
 WPF Core application displaying `CustomControlSample`
+
+### Library GlyphDrawerTestApp
+WPF application to test `GlyphDrawer`
+
+### Library GlyphDrawerShowApp
+WPF application displaying how the parameters of `GlyphDrawer.Write()` paint the
+string differently.
 
 ## Project Status
 Completed and stable
 
 ## Copyright
-Copyright 2020 Jürg Peter Huber, Singapore.
+Copyright 2024 Jürg Peter Huber, Singapore.
 
 Licensed under the [Creative Commons 0 license](COPYING.txt)
 
