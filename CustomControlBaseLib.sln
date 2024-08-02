@@ -14,13 +14,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CustomControlSample.pdn = CustomControlSample.pdn
 		CustomControlSample.png = CustomControlSample.png
 		GlyphDrawerSamples.jpg = GlyphDrawerSamples.jpg
+		LICENSE = LICENSE
 		README.md = README.md
 		TwoStrings.jpg = TwoStrings.jpg
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlyphDrawerTestApp", "GlyphDrawerTestApp\GlyphDrawerTestApp.csproj", "{818E8BF1-D366-4B53-B2E1-89A2D59A5691}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlyphDrawerTestApp", "GlyphDrawerTestApp\GlyphDrawerTestApp.csproj", "{818E8BF1-D366-4B53-B2E1-89A2D59A5691}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlyphDrawerShowApp", "GlyphDrawerShowApp\GlyphDrawerShowApp.csproj", "{0075CE14-1BAF-46DB-92BE-5DB5713476AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlyphDrawerShowApp", "GlyphDrawerShowApp\GlyphDrawerShowApp.csproj", "{0075CE14-1BAF-46DB-92BE-5DB5713476AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

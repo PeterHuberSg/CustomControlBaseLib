@@ -235,5 +235,5 @@ Completed and stable
 ## Copyright
 Copyright 2024 Jürg Peter Huber, Singapore.
 
-Licensed under the [Creative Commons 0 license](COPYING.txt)
+Licensed under the [Creative Commons 0 license](LICENSE)
 
