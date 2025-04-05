@@ -367,6 +367,7 @@ namespace CustomControlBaseLib {
     /// <summary>
     /// Should all the available width be used for this Control or only the width it really needs ? The control
     /// knows how to use additional space (=expandable).
+    /// Returns true if only needed width should be used, false if all available width should be used.
     /// </summary>
     protected bool IsSizingWidthToExpandableContent() {
       if (!double.IsNaN(Width) || HorizontalAlignment==HorizontalAlignment.Stretch) {
