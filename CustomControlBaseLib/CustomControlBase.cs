@@ -216,6 +216,7 @@ namespace CustomControlBaseLib {
       }
 
 #else
+      Size measureRequestedSize;
 #endif
       MeasureContentSize = MeasureContentOverride(removeBorderPaddingSpace(constraint, out double borderPaddingWith, out double borderPaddingHeight));
 
@@ -261,9 +262,9 @@ namespace CustomControlBaseLib {
 
 #if DEBUG
     Size arrangeConstraintSize;
-    Size arrangeContentSize;
     Size arrangeRequestedSize;
 #endif
+    Size arrangeContentSize;
 
 
     // Use of HorizontalContentAlignment
@@ -326,6 +327,7 @@ namespace CustomControlBaseLib {
       arrangeConstraintSize = arrangeBounds;
 
 #else
+      Size arrangeRequestedSize;
 #endif
       Size lessBorderPaddingSize = removeBorderPaddingSpace(arrangeBounds, out double borderPaddingWith, out double borderPaddingHeight);
       Size arrangeSize = lessBorderPaddingSize;
@@ -513,8 +515,8 @@ namespace CustomControlBaseLib {
             new Typeface("Courier New"),
             12, layoutDataBrush, VisualTreeHelper.GetDpi(this).PixelsPerDip);
           drawingContext.DrawText(formattedText, new Point(BorderThickness.Left + Padding.Left, BorderThickness.Top + Padding.Top));
-#endif
         }
+#endif
       }
     }
 
